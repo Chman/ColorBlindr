@@ -17,4 +17,4 @@ Remember to remove or disable it before building the final version of your game.
 License
 -------
 
-Zlib (see [LICENSE.txt](LICENSE.txt))
+MIT (see [LICENSE.txt](LICENSE.txt))
