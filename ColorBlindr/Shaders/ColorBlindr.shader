@@ -82,7 +82,7 @@
 				#pragma fragment frag
 				#pragma fragmentoption ARB_precision_hint_fastest
 
-				float4 frag(v2f_img i):COLOR
+				float4 frag(v2f_img i) : SV_Target
 				{
 					return tex2D(_MainTex, i.uv);
 				}
@@ -99,7 +99,7 @@
 				#pragma fragment frag
 				#pragma fragmentoption ARB_precision_hint_fastest
 
-				float4 frag(v2f_img i):COLOR
+				float4 frag(v2f_img i) : SV_Target
 				{
 					float3 result = rgFilter(tex2D(_MainTex, i.uv).rgb, 37.611765, 90.87451, -2.862745);
 					return float4(result, 1.0);
@@ -116,7 +116,7 @@
 				#pragma fragment frag
 				#pragma fragmentoption ARB_precision_hint_fastest
 
-				float4 frag(v2f_img i):COLOR
+				float4 frag(v2f_img i) : SV_Target
 				{
 					float3 result = rgFilter(tex2D(_MainTex, i.uv).rgb, 14.443137, 114.054902, 0.513725);
 					return float4(result, 1.0);
@@ -132,7 +132,7 @@
 				#pragma fragment frag
 				#pragma fragmentoption ARB_precision_hint_fastest
 
-				float4 frag(v2f_img i):COLOR
+				float4 frag(v2f_img i) : SV_Target
 				{
 					float3 result = tritanFilter(tex2D(_MainTex, i.uv).rgb);
 					return float4(result, 1.0);
