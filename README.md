@@ -5,7 +5,7 @@ ColorBlindr
 
 You'll find some screenshots [here](http://imgur.com/a/uunaS#0).
 
-Requires Unity Pro 4.3+ or Unity 5+ (Personal or Pro).
+Requires Unity 5+ (Personal or Pro).
 
 Instructions
 ------------

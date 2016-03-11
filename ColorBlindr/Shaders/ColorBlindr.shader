@@ -73,24 +73,7 @@
 		ZTest Always Cull Off ZWrite Off
 		Fog { Mode off }
 
-		// (0) Normal
-		Pass
-		{
-			CGPROGRAM
-
-				#pragma vertex vert_img
-				#pragma fragment frag
-				#pragma fragmentoption ARB_precision_hint_fastest
-
-				float4 frag(v2f_img i) : SV_Target
-				{
-					return tex2D(_MainTex, i.uv);
-				}
-
-			ENDCG
-		}
-
-		// (1) Deuteranopia
+		// (0) Deuteranopia
 		Pass
 		{
 			CGPROGRAM
@@ -107,7 +90,7 @@
 			ENDCG
 		}
 
-		// (2) Protanopia
+		// (1) Protanopia
 		Pass
 		{
 			CGPROGRAM
@@ -124,7 +107,7 @@
 			ENDCG
 		}
 
-		// (3) Tritanopia
+		// (2) Tritanopia
 		Pass
 		{
 			CGPROGRAM
@@ -136,6 +119,60 @@
 				{
 					float3 result = tritanFilter(tex2D(_MainTex, i.uv).rgb);
 					return float4(result, 1.0);
+				}
+
+			ENDCG
+		}
+
+		// (3) Deuteranopia - Linear
+		Pass
+		{
+			CGPROGRAM
+
+				#pragma vertex vert_img
+				#pragma fragment frag
+				#pragma fragmentoption ARB_precision_hint_fastest
+
+				float4 frag(v2f_img i) : SV_Target
+				{
+					float3 color = LinearToGammaSpace(tex2D(_MainTex, i.uv).rgb);
+					float3 result = rgFilter(color, 37.611765, 90.87451, -2.862745);
+					return float4(GammaToLinearSpace(result), 1.0);
+				}
+			ENDCG
+		}
+
+		// (4) Protanopia - Linear
+		Pass
+		{
+			CGPROGRAM
+
+				#pragma vertex vert_img
+				#pragma fragment frag
+				#pragma fragmentoption ARB_precision_hint_fastest
+
+				float4 frag(v2f_img i) : SV_Target
+				{
+					float3 color = LinearToGammaSpace(tex2D(_MainTex, i.uv).rgb);
+					float3 result = rgFilter(color, 14.443137, 114.054902, 0.513725);
+					return float4(GammaToLinearSpace(result), 1.0);
+				}
+			ENDCG
+		}
+
+		// (5) Tritanopia - Linear
+		Pass
+		{
+			CGPROGRAM
+				#pragma vertex vert_img
+				#pragma fragment frag
+				#pragma fragmentoption ARB_precision_hint_fastest
+
+				float4 frag(v2f_img i) : SV_Target
+				{
+					float3 color = LinearToGammaSpace(tex2D(_MainTex, i.uv).rgb);
+					float3 result = tritanFilter(color);
+					return float4(GammaToLinearSpace(result), 1.0);
 				}
 
 			ENDCG

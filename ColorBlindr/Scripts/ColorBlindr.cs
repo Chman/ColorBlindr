@@ -34,6 +34,11 @@ public class ColorBlindr : MonoBehaviour
 		}
 	}
 
+	public bool IsLinear
+	{
+		get { return QualitySettings.activeColorSpace == ColorSpace.Linear; }
+	}
+
 	void Start()
 	{
 		// Disable if we don't support image effects
@@ -56,7 +61,7 @@ public class ColorBlindr : MonoBehaviour
 		// run on the users graphics card
 		if (Shader != null && !Shader.isSupported)
 		{
-			Debug.LogWarning("Unsupported shader.");
+			Debug.LogWarning("Missing or unsupported shader.");
 			enabled = false;
 			return;
 		}
@@ -70,13 +75,13 @@ public class ColorBlindr : MonoBehaviour
 
 	void OnRenderImage(RenderTexture source, RenderTexture destination)
 	{
-		if (Shader == null)
+		if (Shader == null || Blindness == BlindnessType.Normal)
 		{
 			Graphics.Blit(source, destination);
 			return;
 		}
 
 		Material.SetFloat("_Strength", Strength);
-		Graphics.Blit(source, destination, Material, (int)Blindness);
+		Graphics.Blit(source, destination, Material, ((int)Blindness - 1) + (IsLinear ? 3 : 0));
 	}
 }
